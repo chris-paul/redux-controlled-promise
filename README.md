@@ -1,7 +1,7 @@
 <!--
  * @Author: lhk
  * @Date: 2020-04-07 10:37:22
- * @LastEditTime: 2020-04-07 21:21:30
+ * @LastEditTime: 2020-04-07 21:28:22
  * @LastEditors: Please set LastEditors
  * @Description: README
  * @FilePath: \redux-controlled-promise\README.md
@@ -33,9 +33,9 @@ import rootReducer from './reducers';
 const store = createStore(rootReducer, applyMiddleware(reduxControlledPromise));
 ```
 
--   use in action
+## USE IN ACTION
 
-    -   control sequence
+-   control sequence
 
     ```js
     import { createStore, applyMiddleware } from 'redux';
@@ -84,12 +84,12 @@ const store = createStore(rootReducer, applyMiddleware(reduxControlledPromise));
 
 -   You can customize the return value that can't find the action type
 
-```js
-const errorAlert = () => ({
-    // ... error dialog
-});
-const store = createStore(
-    reducer,
-    applyMiddleware(reduxControlledPromise.withErrorArgument(errorAlert)),
-);
-```
+    ```js
+    const errorAlert = () => ({
+        // ... error dialog
+    });
+    const store = createStore(
+        reducer,
+        applyMiddleware(reduxControlledPromise.withErrorArgument(errorAlert)),
+    );
+    ```
