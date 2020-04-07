@@ -1,0 +1,40 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "jest": true
+    },
+    "globals": {
+        "G2": true,
+        "__dirname": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true,
+            "legacyDecorators": true
+        }
+    },
+    "extends": [
+        "airbnb",
+        "prettier",
+        "plugin:jest/recommended",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "prettier/react"
+    ],
+    "plugins": ["markdown", "react", "babel", "jest"],
+    "rules": {
+        "react/jsx-props-no-spreading": "off",
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [".js", ".jsx"]
+            }
+        ]
+    }
+}
