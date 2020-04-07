@@ -1,7 +1,7 @@
 /*
  * @Author: lhk
  * @Date: 2020-04-07 11:56:20
- * @LastEditTime: 2020-04-07 14:12:01
+ * @LastEditTime: 2020-04-07 21:19:16
  * @LastEditors: Please set LastEditors
  * @Description: redux中间件 控制dispatch顺序
  * @FilePath: \redux-controlled-promise\src\index.js
@@ -22,5 +22,5 @@ const createControlledMiddleware = (extraArgument) => ({ dispatch }) => (next) =
 };
 
 const reduxControlledPromise = createControlledMiddleware({ errMsg: 'action type node found' });
-reduxControlledPromise.withExtraArgument = createControlledMiddleware;
+reduxControlledPromise.withErrorArgument = createControlledMiddleware;
 export default reduxControlledPromise;
