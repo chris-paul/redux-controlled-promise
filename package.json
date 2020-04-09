@@ -1,6 +1,6 @@
 {
     "name": "redux-controlled-promise",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "redux middleware to controll dispatcch order use promise",
     "main": "src/index.js",
     "scripts": {
