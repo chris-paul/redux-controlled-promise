@@ -9,7 +9,7 @@
 
 # redux-controlled-promise
 
-redux middleware to controll dispatcch order use promise
+redux middleware to controll dispatch order use promise when use redux-thunk
 
 ```
 npm install redux-controlled-promise
@@ -19,77 +19,61 @@ npm install redux-controlled-promise
 
 -   install package
 
-```
-npm install redux-controlled-promise
-```
+    ```
+    npm install redux-controlled-promise
+    ```
 
 -   add middleware
 
-```js
-import { createStore, applyMiddleware } from 'redux';
-import reduxControlledPromise from 'redux-controlled-promise';
-import rootReducer from './reducers';
-
-const store = createStore(rootReducer, applyMiddleware(reduxControlledPromise));
-```
-
-## USE IN ACTION
-
--   control sequence
-
     ```js
     import { createStore, applyMiddleware } from 'redux';
+    import thunk from 'redux-thunk';
     import reduxControlledPromise from 'redux-controlled-promise';
     import rootReducer from './reducers';
 
-    const store = createStore(rootReducer, applyMiddleware(reduxControlledPromise));
-
-    // If we want to control the order of dispatch, We can follow the example below to program,The order of the following
-    // example dispatch is LOAD_A_CONFIG => LOAD_B_CONFIG & LOAD_C_CONFIG => LOAD_D_CONFIG
-    store.dispatch([
-        {
-            type: 'LOAD_A_CONFIG',
-            config: [],
-        },
-        [
-            {
-                type: 'LOAD_B_CONFIG',
-                config: [],
-            },
-            {
-                type: 'LOAD_C_CONFIG',
-                config: [],
-            },
-        ],
-        {
-            type: 'LOAD_D_CONFIG',
-            config: [],
-        },
-    ]);
-
-    // The return value of middleware is promise, So we can execute some callback functions after the dispatch
-    store.dispatch([
-        {
-            type: 'LOAD_A_CONFIG',
-            config: [],
-        },
-        {
-            type: 'LOAD_B_CONFIG',
-            config: [],
-        },
-    ]).then(res) => {
-        // ...config loaded
-    };
+    const store = createStore(rootReducer, applyMiddleware(reduxControlledPromise, thunk));
     ```
 
--   You can customize the return value that can't find the action type
+## USE IN ACTION
 
-    ```js
-    const errorAlert = () => ({
-        // ... error dialog
-    });
-    const store = createStore(
-        reducer,
-        applyMiddleware(reduxControlledPromise.withErrorArgument(errorAlert)),
-    );
-    ```
+If we want to control the order of dispatch, especially when you use the redux thunk middlewareWe.
+you can follow the example below to program, The order of the following
+
+
+example dispatch is asyncApi1 => asyncApi2 & LOAD_C_CONFIG => LOAD_D_CONFIG
+
+```js
+const asyncApi1 = (config) => {
+    return async (dispatch) => {
+        await xxx();
+        dispatch({
+            type: 'LOAD_A_CONFIG',
+        })
+    }
+}
+store.dispatch([
+    asyncApi1(config),
+    [
+        asyncApi2(config),
+        {
+            type: 'LOAD_C_CONFIG',
+            config: [],
+        },
+    ],
+    {
+        type: 'LOAD_D_CONFIG',
+        config: [],
+    },
+]);
+```
+
+The return value of middleware is promise, So we can execute some callback functions after the dispatch
+
+ ```js
+store.dispatch([
+    asyncApi1(config),
+    asyncApi2(config),
+]).then(res) => {
+    // ...config loaded
+};
+```

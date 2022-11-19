@@ -6,7 +6,7 @@
  * @Description: redux中间件 控制dispatch顺序
  * @FilePath: \redux-controlled-promise\src\index.js
  */
-const createControlledMiddleware = (extraArgument) => ({ dispatch }) => (next) => (action) => {
+const reduxControlledPromise = ({ dispatch }) => (next) => (action) => {
     if (!Array.isArray(action)) {
         return next(action);
     }
@@ -17,10 +17,8 @@ const createControlledMiddleware = (extraArgument) => ({ dispatch }) => (next) =
         if (Array.isArray(actionItem)) {
             return Promise.all(actionItem.map((item) => dispatch(item)));
         }
-        return Promise.resolve(dispatch(actionItem));
-    }, Promise.resolve(extraArgument));
+        return result.then(() => dispatch(actionItem));
+    }, Promise.resolve());
 };
 
-const reduxControlledPromise = createControlledMiddleware({ errMsg: 'action type node found' });
-reduxControlledPromise.withErrorArgument = createControlledMiddleware;
 export default reduxControlledPromise;
