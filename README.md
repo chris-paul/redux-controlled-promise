@@ -40,7 +40,7 @@ If we want to control the order of dispatch, especially when you use the redux t
 you can follow the example below to program, The order of the following
 
 
-example dispatch is asyncApi1 => asyncApi2 & LOAD_C_CONFIG => LOAD_D_CONFIG
+example dispatch is asyncApi1 => asyncApi2 & LOAD_B_CONFIG => LOAD_C_CONFIG
 
 ```js
 const asyncApi1 = (config) => {
@@ -56,12 +56,12 @@ store.dispatch([
     [
         asyncApi2(config),
         {
-            type: 'LOAD_C_CONFIG',
+            type: 'LOAD_B_CONFIG',
             config: [],
         },
     ],
     {
-        type: 'LOAD_D_CONFIG',
+        type: 'LOAD_C_CONFIG',
         config: [],
     },
 ]);
